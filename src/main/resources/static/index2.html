@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vue Page</title>
+    <title>Second Vue Page</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -17,7 +17,7 @@
 <div id="app" class="container-fluid">
     <div class="col-md-8 mx-auto">
         <h1 class="mt-4">Cryptocurrency Convertor</h1>
-        <table class="table table-striped">
+        <table v-if="coins.length > 0" class="table table-striped">
             <thead>
             <tr>
                 <th>Cryptocurrency</th>
@@ -26,20 +26,25 @@
                 <th>Input</th>
                 <th>Output</th>
                 <th></th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="item in data">
+            <tr v-for="item in coins">
                 <td>{{item.id.toUpperCase()}}</td>
                 <td>{{item.symbol}}</td>
                 <td>{{item.price_usd}}</td>
                 <td><input type="number" v-model="item.calculatedValue" placeholder="0"/></td>
                 <td>{{isNaN(item.calculatedValue)? (0).toPrecision(8) : (item.calculatedValue * item.price_usd).toPrecision(8)}}</td>
                 <td>USD</td>
+                <td><button @click="removeCurrency(item.symbol)" class="btn btn-info">Remove</button></td>
             </tr>
             </tbody>
         </table>
         <hr>
+        <form class="form-inline" action="javascript:void(0)">
+            <input class="form-control" type="text" placeholder="BTC" v-model="userInput"><button class="btn btn-primary" @click="addCurrency()">Add</button>
+        </form>
     </div>
 </div>
 <script src="js/main.js"></script>
